@@ -1,1 +1,1 @@
-import './src/csv';
+import './csv';
