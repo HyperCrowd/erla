@@ -68,7 +68,7 @@ async function main() {
 
     .on('close', function () {
       const report = cache.getReport(user_id);
-      console.log(report);
+      console.log(JSON.stringify(report));
     });
 }
 
