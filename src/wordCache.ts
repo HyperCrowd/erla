@@ -1,3 +1,4 @@
+import { getDb, run, query, reset } from './sqlite';
 import winkNLP from 'wink-nlp';
 import model from 'wink-eng-lite-web-model';
 import { rmSync } from 'fs-extra';
