@@ -50,8 +50,7 @@ async function main() {
         return;
       }
       const tweet = data.tweet.toLowerCase();
-      console.log(data);
-      return;
+
       const text = pe
         .process(tweet)
         .filter((tweet) => tweet.type === 'text')
@@ -62,7 +61,7 @@ async function main() {
         user_id = cache.addUsages(
           usages,
           data.username,
-          new Date(data.createdAt)
+          new Date(data.created_at)
         );
       }
     })
