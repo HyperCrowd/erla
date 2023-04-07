@@ -352,10 +352,10 @@ export default class WordCache {
       return [];
     }
 
-    const words = `('${tokens.join(`'), ('`)}')`;
+    const words = `('${tokens.join(`'), ('`)}')`.replace(`$`, `S`);
     run(this.connection, queries.insertNewWords.replace('$$', words));
 
-    const wordList = `('${tokens.join(`', '`)}')`;
+    const wordList = `('${tokens.join(`', '`)}')`.replace(`$`, `S`);
     const rows = query<Word>(
       this.connection,
       queries.getNewWords.replace('$$', wordList),
