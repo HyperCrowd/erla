@@ -356,6 +356,11 @@ crypto-random-string@^2.0.0:
   resolved "https://registry.npmjs.org/crypto-random-string/-/crypto-random-string-2.0.0.tgz"
   integrity sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==
 
+csv-stream@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/csv-stream/-/csv-stream-0.2.0.tgz#633ee8851b02c4ba51f5dad083610e51831966b9"
+  integrity sha512-K9kh9wWGsJrvdaDSb3TdSgwVHCky8fRW7/USBq906xsk2+IGA3X+j/BbN9c5xcedhIIlWKQtk1xtVdhNyfIDrA==
+
 debug@^3.2.7:
   version "3.2.7"
   resolved "https://registry.npmjs.org/debug/-/debug-3.2.7.tgz"
@@ -1046,6 +1051,11 @@ pirates@^4.0.1:
   version "4.0.5"
   resolved "https://registry.npmjs.org/pirates/-/pirates-4.0.5.tgz"
   integrity sha512-8V9+HQPupnaXMA23c5hvl69zXvTwTzyAYasnkb0Tts4XvO4CliqONMOnvlq26rkhLC3nWDFBJf73LU1e1VZLaQ==
+
+post-entity@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/post-entity/-/post-entity-0.0.2.tgz#395fdce98a1e390929c577ad28cbe0fe128d7712"
+  integrity sha512-tg0PZ7iE3sYGjZP/R9/TEQH845PqVM5ZdE4yKvKgtVu1eP0NZ7RDYrzC0dKEgQDEgG1I0C4fc7iPIw8a3k6sfQ==
 
 postcss-load-config@^3.0.1:
   version "3.1.4"

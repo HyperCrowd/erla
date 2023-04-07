@@ -1,1 +1,1 @@
-import { Command } from 'commander';
+import './src/csv';

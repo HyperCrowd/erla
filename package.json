@@ -46,7 +46,9 @@
   "dependencies": {
     "better-sqlite3": "^8.2.0",
     "commander": "^9.3.0",
+    "csv-stream": "^0.2.0",
     "fs-extra": "^11.1.1",
+    "post-entity": "^0.0.2",
     "ts-node": "^10.8.1",
     "wink-eng-lite-web-model": "^1.5.0",
     "wink-nlp": "^1.13.1"
