@@ -1,3 +1,4 @@
+import type { TimeSeriesDataPoint } from './behavior';
 import { getDb, run, query, reset } from './sqlite';
 import winkNLP from 'wink-nlp';
 import model from 'wink-eng-lite-web-model';
@@ -49,6 +50,14 @@ interface UniqueWords {
   // movingAverage: number
   // uniqueDistance: number
   // countDistance: number
+}
+
+interface Report {
+  hour: number;
+  count: number;
+  uniqueCount: number;
+  ratio: number;
+  newGrammar: number;
 }
 
 const queries = {
@@ -158,7 +167,7 @@ export default class WordCache {
    *
    * @returns
    */
-  getReport(account_id: number) {
+  getReport(account_id: number): Report[] {
     const timeline = query<UniqueWords>(
       this.connection,
       queries.getUniqueWords,
@@ -168,7 +177,7 @@ export default class WordCache {
     );
 
     if (timeline.length === 0) {
-      return timeline;
+      return [];
     }
 
     const wordHistory = query<UsageEntry>(
@@ -199,7 +208,7 @@ export default class WordCache {
     }
 
     const knownWords: number[] = [];
-    const result: UniqueWords[] = times.map((time, i) => {
+    const result: Report[] = times.map((time, i) => {
       let newGrammar = 0;
       wordHistory
         .filter((word) => word.hour === time)
@@ -364,5 +373,23 @@ export default class WordCache {
     );
 
     return rows;
+  }
+
+  /**
+   *
+   */
+  toTimeSeries(reports: Report[], value: keyof Report): TimeSeriesDataPoint[] {
+    const result: TimeSeriesDataPoint[] = [];
+
+    for (const report of reports) {
+      let amount: number = report[value];
+
+      result.push({
+        date: report.hour.toString(),
+        value: amount,
+      });
+    }
+
+    return result;
   }
 }
