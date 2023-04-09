@@ -6,6 +6,7 @@ export interface TimeSeriesDataPoint {
 
 // Define the interface for the behavior categories
 interface TimeSeriesBehavior {
+  date: string;
   increasing: boolean;
   decreasing: boolean;
   fluctuating: boolean;
@@ -13,27 +14,16 @@ interface TimeSeriesBehavior {
   accelerating: boolean;
   decelerating: boolean;
   turning_point: number | null;
-  peak: number | null;
-  trough: number | null;
+  //peak: number | null;
+  //trough: number | null;
   volatilie: boolean;
 }
 
 // Categorize the behavior based on the trend of the time-series data
 export function categorizeBehavior(
   timeSeriesData: TimeSeriesDataPoint[]
-): TimeSeriesBehavior {
-  const behavior: TimeSeriesBehavior = {
-    increasing: false,
-    decreasing: false,
-    fluctuating: false,
-    flat: false,
-    accelerating: false,
-    decelerating: false,
-    turning_point: null,
-    peak: null,
-    trough: null,
-    volatilie: false,
-  };
+): TimeSeriesBehavior[] {
+  const result: TimeSeriesBehavior[] = [];
 
   let previousValue: number = timeSeriesData[0].value;
   let increasing: boolean = true;
@@ -45,6 +35,20 @@ export function categorizeBehavior(
   let isVolatile: boolean = false;
 
   for (let i: number = 1; i < timeSeriesData.length; i++) {
+    const behavior: TimeSeriesBehavior = {
+      date: timeSeriesData[i].date,
+      increasing: false,
+      decreasing: false,
+      fluctuating: false,
+      flat: false,
+      accelerating: false,
+      decelerating: false,
+      turning_point: null,
+      //peak: null,
+      //trough: null,
+      volatilie: false,
+    };
+
     const currentValue: number = timeSeriesData[i].value;
     const previousDiff: number = previousValue - timeSeriesData[i - 1].value;
     const currentDiff: number = currentValue - previousValue;
@@ -83,7 +87,7 @@ export function categorizeBehavior(
         isVolatile = true;
       }
     }
-
+    /*
     if (behavior.peak === null || currentValue > behavior.peak) {
       behavior.peak = currentValue;
     }
@@ -91,27 +95,28 @@ export function categorizeBehavior(
     if (behavior.trough === null || currentValue < behavior.trough) {
       behavior.trough = currentValue;
     }
-
+*/
     previousValue = currentValue;
+
+    if (increasing) {
+      behavior.increasing = true;
+    } else if (decreasing) {
+      behavior.decreasing = true;
+    } else if (flat) {
+      behavior.flat = true;
+    } else {
+      behavior.fluctuating = true;
+    }
+
+    if (accelerating) {
+      behavior.accelerating = true;
+    } else if (decelerating) {
+      behavior.decelerating = true;
+    }
+
+    behavior.volatilie = isVolatile;
+    result.push(behavior);
   }
 
-  if (increasing) {
-    behavior.increasing = true;
-  } else if (decreasing) {
-    behavior.decreasing = true;
-  } else if (flat) {
-    behavior.flat = true;
-  } else {
-    behavior.fluctuating = true;
-  }
-
-  if (accelerating) {
-    behavior.accelerating = true;
-  } else if (decelerating) {
-    behavior.decelerating = true;
-  }
-
-  behavior.volatilie = isVolatile;
-
-  return behavior;
+  return result;
 }
