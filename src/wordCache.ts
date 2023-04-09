@@ -6,6 +6,7 @@ import { rmSync } from 'fs-extra';
 const singleQuotes = /'/g;
 const newLines = /[\n\r]/g;
 const msInHour = 1000 * 60 * 60;
+const moneyRegex = /\$/g;
 
 // Instantiate winkNLP.
 const nlp = winkNLP(model);
@@ -352,10 +353,10 @@ export default class WordCache {
       return [];
     }
 
-    const words = `('${tokens.join(`'), ('`)}')`.replace(`$`, `S`);
+    const words = `('${tokens.join(`'), ('`)}')`.replace(moneyRegex, `S`);
     run(this.connection, queries.insertNewWords.replace('$$', words));
 
-    const wordList = `('${tokens.join(`', '`)}')`.replace(`$`, `S`);
+    const wordList = `('${tokens.join(`', '`)}')`.replace(moneyRegex, `S`);
     const rows = query<Word>(
       this.connection,
       queries.getNewWords.replace('$$', wordList),
