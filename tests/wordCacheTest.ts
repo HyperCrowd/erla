@@ -1,3 +1,4 @@
+import type { TimeSeriesBehavior } from '../src/behavior';
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
 import { categorizeBehavior } from '../src/behavior';
@@ -85,8 +86,57 @@ test('Behavior analysis', () => {
   const ratioBehavior = categorizeBehavior(ratioSeries);
   const uniqueCountBehavior = categorizeBehavior(uniqueCountSeries);
 
-  console.log(countBehavior);
-  console.log(newGrammarBehavior);
-  console.log(ratioBehavior);
-  console.log(uniqueCountBehavior);
+  console.log('count', getBehaviorCounts(countBehavior));
+  console.log('newGrammar', getBehaviorCounts(newGrammarBehavior));
+  console.log('ratio', getBehaviorCounts(ratioBehavior));
+  console.log('uniqueCount', getBehaviorCounts(uniqueCountBehavior));
 });
+
+function getBehaviorCounts(behaviors: TimeSeriesBehavior[]) {
+  const result = {
+    increasing: 0,
+    decreasing: 0,
+    fluctuating: 0,
+    flat: 0,
+    accelerating: 0,
+    decelerating: 0,
+    turning_point: [],
+    volatilie: 0,
+  };
+
+  for (const behavior of behaviors) {
+    if (behavior.increasing) {
+      result.increasing += 1;
+    }
+
+    if (behavior.decreasing) {
+      result.decreasing += 1;
+    }
+
+    if (behavior.fluctuating) {
+      result.fluctuating += 1;
+    }
+
+    if (behavior.flat) {
+      result.flat += 1;
+    }
+
+    if (behavior.accelerating) {
+      result.accelerating += 1;
+    }
+
+    if (behavior.decelerating) {
+      result.decelerating += 1;
+    }
+
+    if (behavior.turning_point !== null) {
+      result.turning_point.push(behavior.turning_point);
+    }
+
+    if (behavior.volatilie) {
+      result.volatilie += 1;
+    }
+  }
+
+  return result;
+}
